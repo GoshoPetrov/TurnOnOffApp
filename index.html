@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Turn On/Off Light</title>
     <link rel="stylesheet" href="style.css">
-
+    <script src="script.js"></script>
     <link rel="icon" type="image/png" href="/apple-touch-icon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta name="apple-mobile-web-app-title" content="Turn On/Off Light">
@@ -16,9 +16,10 @@
 <body>
     <div class="content">
         <input class="row" type="text" name="ip" id="ip" value="127.0.0.1">
-        <div class="row">Loading...</div>
-        <button class="row">Turn On</button>
-        <button class="row">Turn Off</button>
+        <div id="msg" class="row">Loading...</div>
+        <button class="row" onclick="javascript:onTurnOn();">Turn On</button>
+        <button class="row" onclick="javascript:onTurnOff();">Turn Off</button>
+        <button class="row red-button" onclick="javascript:onCheck();">Check IP</button>
     </div>
 </body>
 
