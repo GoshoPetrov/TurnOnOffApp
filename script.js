@@ -1,10 +1,32 @@
-function onTurnOn() {
-    showMessage(`Turning ${getIp()} on...`);
+
+
+function sendRequest(action) {
+    const ip = getIp();
+    showMessage(`Turning ${ip} ${action}...`);
+
+    fetch(`http://${ip}/${action}`)
+        .then(response => {
+            if (!response.ok) {
+                showMessage(`HTTP error! Status: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then(data => {
+            showMessage(`Data received: ${data}`);
+        })
+        .catch(error => {
+            // Handle errors that occurred during the fetch
+            showMessage(`Fetch error: ${error}`);
+        });
+
 }
 
-function onTurnOff(){
-    showMessage(`Turning ${getIp()} off...`);
+function onTurnOn() {
+    sendRequest("on");
+}
 
+function onTurnOff() {
+    sendRequest("off");
 }
 
 function showMessage(message) {
@@ -17,6 +39,6 @@ function getIp() {
     return ipElement.value;
 }
 
-function onCheck(){
+function onCheck() {
     showMessage("The IP is checking...");
 }
