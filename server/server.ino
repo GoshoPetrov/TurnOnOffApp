@@ -1,3 +1,5 @@
+//https://www.instructables.com/Digital-Thermometer-Using-NodeMCU-and-LM35/
+
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 
@@ -71,6 +73,7 @@ void handleTurnOn() {
 void handleTurnOff() {
   turnOff();
 
+  // CORS
   server.sendHeader("Access-Control-Allow-Origin", "*");
   server.sendHeader("Access-Control-Allow-Methods", "GET");
   server.sendHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -81,10 +84,35 @@ void handleWorld(){
   server.send(200, "text/html", htmlContent);
 }
 
+void handleTemp() {
+  
+  // CORS
+  server.sendHeader("Access-Control-Allow-Origin", "*");
+  server.sendHeader("Access-Control-Allow-Methods", "GET");
+  server.sendHeader("Access-Control-Allow-Headers", "Content-Type");
+  
+  float temperature = readTemperature();
+
+  char buffer[10]; // Adjust the buffer size based on your needs
+  dtostrf(temperature, 4, 2, buffer);
+  
+  server.send(200, "text/html", String(buffer) + "C");
+}
+
+//TODO: formula...
+float readTemperature() {
+  float sensorValue = analogRead(A0);
+  float temp_celsius = (sensorValue * 2.0) * 0.8 * 7.0;
+  return temp_celsius;
+}
+
 // the setup function runs once when you press reset or power the board
 void setup() {
+
   pinMode(LEDpin, OUTPUT);
   pinMode(SwitchPin, OUTPUT);
+
+  pinMode(A0, INPUT);   
 
   Serial.begin(9600);
 
@@ -111,7 +139,8 @@ void setup() {
   server.on("/on", HTTP_GET, handleTurnOn);
   server.on("/off", HTTP_GET, handleTurnOff);
   server.on("/hello", HTTP_GET, handleWorld);
-
+  server.on("/temp", HTTP_GET, handleTemp);
+  
   // Start server
   server.begin();
   Serial.print("Web server is listening...");

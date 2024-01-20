@@ -15,12 +15,28 @@
 
 <body>
     <div class="content">
-        <input class="row" type="text" name="ip" id="ip" value="192.168.86.67">
-        <div id="msg" class="row">Press a button</div>
-        <button class="row" onclick="javascript:onTurnOn();">Turn Light On</button>
-        <button class="row" onclick="javascript:onTurnOff();">Turn Light Off</button>
-        <!-- <button class="row red-button" onclick="javascript:onCheck();">Check IP</button> -->
-    </div>
+        <input class="row" type="text" name="ip" id="ip" value="192.168.86.68">
+        <div id="ipmsg" class="row">Press a button</div>
+        <button class="row" onclick="javascript:onTurnOn('ip');">Turn Light On</button>
+        <button class="row" onclick="javascript:onTurnOff('ip');">Turn Light Off</button>
+        <button class="row" onclick="javascript:readTemp('ip')">Show temperature</button>
+    </div> 
+
+    <div class="content">
+        <input class="row" type="text" name="ip" id="ip2" value="192.168.86.68">
+        <div id="ip2msg" class="row">Press a button</div>
+        <button class="row" onclick="javascript:onTurnOn('ip2');">Turn Light On</button>
+        <button class="row" onclick="javascript:onTurnOff('ip2');">Turn Light Off</button>
+        <button class="row" onclick="javascript:readTemp('ip2')">Show temperature</button>
+    </div> 
+
+    <div class="content">
+        <input class="row" type="text" name="ip" id="ip3" value="192.168.86.68">
+        <div id="ip3msg" class="row">Press a button</div>
+        <button class="row" onclick="javascript:onTurnOn('ip3');">Turn Light On</button>
+        <button class="row" onclick="javascript:onTurnOff('ip3');">Turn Light Off</button>
+        <button class="row" onclick="javascript:readTemp('ip3')">Show temperature</button>
+    </div> 
 </body>
 
 </html>

@@ -1,44 +1,61 @@
 
 
-function sendRequest(action) {
-    const ip = getIp();
-    showMessage(`Turning ${ip} ${action}...`);
+function sendRequest(ipId, action) {
+    const ip = getIp(ipId);
+    showMessage(ipId, `Turning ${ip} ${action}...`);
 
     fetch(`http://${ip}/${action}`)
         .then(response => {
             if (!response.ok) {
-                showMessage(`HTTP error! Status: ${response.status}`);
+                showMessage(ipId, `HTTP error! Status: ${response.status}`);
             }
             return response.text();
         })
         .then(data => {
-            showMessage(`Data received: ${data}`);
+            showMessage(ipId, `Data received: ${data}`);
         })
         .catch(error => {
             // Handle errors that occurred during the fetch
-            showMessage(`Fetch error: ${error}`);
+            showMessage(ipId, `Fetch error: ${error}`);
         });
 
 }
 
-function onTurnOn() {
-    sendRequest("on");
+function onTurnOn(id) {
+    sendRequest(id, "on");
 }
 
-function onTurnOff() {
-    sendRequest("off");
+function onTurnOff(id) {
+    sendRequest(id, "off");
 }
 
-function showMessage(message) {
-    const msg = document.getElementById("msg");
+function showMessage(id, message) {
+    const msg = document.getElementById(`${id}msg`);
     msg.innerHTML = message;
 }
 
-function getIp() {
-    const ipElement = document.getElementById("ip");
+function getIp(id) {
+    const ipElement = document.getElementById(id);
     return ipElement.value;
 }
 
-function onCheck() {
-    showMessage("The IP is checking...");
+function onCheck(id, ) {
+    showMessage(id, "The IP is checking...");
+}
+
+var started = {};
+function readTemp(ipId){
+    if (started[ipId]) {
+        console.log(`${ipId} already started...`);
+        return;
+    }
+
+    console.log(`${ipId} starting ...`);
+    started[ipId] = true;
+    var again = () => {
+        sendRequest(ipId, "temp");
+        setTimeout(again, 5000);
+    };
+
+    again();
 }
